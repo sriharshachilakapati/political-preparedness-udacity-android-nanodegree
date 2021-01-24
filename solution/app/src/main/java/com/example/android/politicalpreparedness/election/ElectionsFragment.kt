@@ -24,6 +24,7 @@ class ElectionsFragment: Fragment() {
 
         //TODO: Populate recycler adapters
 
+        return null
     }
 
     //TODO: Refresh adapters when fragment loads
