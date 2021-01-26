@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-class ElectionsFragment: Fragment() {
+class ElectionsFragment : Fragment() {
 
     //TODO: Declare ViewModel
 
