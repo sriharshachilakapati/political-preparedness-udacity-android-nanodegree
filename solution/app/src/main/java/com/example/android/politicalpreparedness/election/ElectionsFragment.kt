@@ -1,11 +1,11 @@
 package com.example.android.politicalpreparedness.election
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
@@ -14,8 +14,6 @@ import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import java.time.Instant
 import java.util.*
-
-private const val TAG = "ElectionsFragment"
 
 class ElectionsFragment : Fragment() {
     private lateinit var binding: FragmentElectionBinding
@@ -30,8 +28,6 @@ class ElectionsFragment : Fragment() {
         binding.run {
             configureRecyclerView(recyclerViewUpcomingElections)
             configureRecyclerView(recyclerViewSavedElections)
-
-            //TODO: Link elections to voter info
 
             //TODO: Populate recycler adapters
         }
@@ -55,9 +51,9 @@ class ElectionsFragment : Fragment() {
     }
 
     private fun onElectionClicked(election: Election) {
-        Log.d(TAG, "Election ${election.id} clicked")
+        val directions = ElectionsFragmentDirections.toVoterInfoFragment(election)
+        findNavController().navigate(directions)
     }
 
     //TODO: Refresh adapters when fragment loads
-
 }

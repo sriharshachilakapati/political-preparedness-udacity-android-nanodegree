@@ -7,9 +7,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="materialButtonStyle">@style/Button</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorPrimary</item>
+    </style>
 
     <style name="SectionLabel">
         <item name="android:textSize">24sp</item>
@@ -17,8 +22,11 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="AppTheme.LaunchButton" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/colorPrimary</item>
+    <style name="LinkLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="drawableStartCompat">@drawable/ic_link</item>
     </style>
 
 </resources>

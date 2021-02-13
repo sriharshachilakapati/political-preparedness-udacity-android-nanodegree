@@ -32,7 +32,6 @@
 
         <Button
             android:id="@+id/button_upcoming_elections"
-            style="@style/AppTheme.LaunchButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
@@ -45,7 +44,6 @@
 
         <Button
             android:id="@+id/button_find_my_representatives"
-            style="@style/AppTheme.LaunchButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
