@@ -11,6 +11,12 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
+    <style name="SectionLabel">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
     <style name="AppTheme.LaunchButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/colorPrimary</item>
     </style>

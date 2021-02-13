@@ -4,14 +4,42 @@
 
     <!-- TODO: Add node to connect Election ViewModel -->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/default_padding"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add Upcoming Election Recycler and Header -->
+        <TextView
+            style="@style/SectionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upcoming_elections" />
 
-        <!-- TODO: Add Saved Election Recycler and Header -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_upcoming_elections"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/default_padding"
+            android:layout_weight="1"
+            tools:itemCount="4"
+            tools:listitem="@layout/layout_election_item" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            style="@style/SectionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saved_elections" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_saved_elections"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_weight="1"
+            tools:itemCount="4"
+            tools:listitem="@layout/layout_election_item" />
+
+    </LinearLayout>
 </layout>

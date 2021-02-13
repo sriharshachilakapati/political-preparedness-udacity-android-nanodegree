@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/electionsFragment"
         android:name="com.example.android.politicalpreparedness.election.ElectionsFragment"
-        android:label="@string/upcoming_elections"
+        android:label="@string/elections"
         tools:layout="@layout/fragment_election" />
 
 </navigation>
