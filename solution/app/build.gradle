@@ -16,6 +16,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+
+        buildConfigField("String", "CIVICS_API_KEY", "\"<INSERT-KEY-HERE>\"")
     }
     buildTypes {
         release {
