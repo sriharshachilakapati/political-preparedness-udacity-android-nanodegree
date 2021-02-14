@@ -9,7 +9,7 @@ import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-@Entity(tableName = "election_table")
+@Entity(tableName = "elections")
 @Parcelize
 data class Election(
         @PrimaryKey val id: Int,

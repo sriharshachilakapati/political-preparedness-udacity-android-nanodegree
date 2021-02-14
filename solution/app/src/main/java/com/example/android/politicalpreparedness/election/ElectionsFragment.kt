@@ -5,46 +5,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
-import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
-import java.time.Instant
-import java.util.*
 
 class ElectionsFragment : Fragment() {
+    private val viewModel by activityViewModels<ElectionsViewModel>(factoryProducer = {
+        ElectionsViewModelFactory(requireContext())
+    })
+
     private lateinit var binding: FragmentElectionBinding
-    //TODO: Declare ViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentElectionBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
-        //TODO: Add ViewModel values and create ViewModel
-
         binding.run {
-            configureRecyclerView(recyclerViewUpcomingElections)
-            configureRecyclerView(recyclerViewSavedElections)
-
-            //TODO: Populate recycler adapters
+            configureRecyclerView(recyclerViewUpcomingElections, viewModel.allElections)
+            configureRecyclerView(recyclerViewSavedElections, viewModel.savedElections)
         }
 
         return binding.root
     }
 
-    private fun configureRecyclerView(recyclerView: RecyclerView) {
+    private fun configureRecyclerView(recyclerView: RecyclerView, dataSource: LiveData<List<Election>>) {
         recyclerView.adapter = ElectionListAdapter(this::onElectionClicked).apply {
-            val list = mutableListOf<Election>()
-
-            repeat(10) {
-                val division = Division("DIV $it", "US", "Florida")
-                list += Election(it, "Election $it", Date.from(Instant.now()), division)
-            }
-
-            submitList(list)
+            dataSource.observe(viewLifecycleOwner, this::submitList)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
