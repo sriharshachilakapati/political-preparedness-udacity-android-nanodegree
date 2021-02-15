@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +15,7 @@ import com.example.android.politicalpreparedness.election.adapter.ElectionListAd
 import com.example.android.politicalpreparedness.network.models.Election
 
 class ElectionsFragment : Fragment() {
-    private val viewModel by activityViewModels<ElectionsViewModel>(factoryProducer = {
+    private val viewModel by viewModels<ElectionsViewModel>(factoryProducer = {
         ElectionsViewModelFactory(requireContext())
     })
 
@@ -45,6 +45,4 @@ class ElectionsFragment : Fragment() {
         val directions = ElectionsFragmentDirections.toVoterInfoFragment(election)
         findNavController().navigate(directions)
     }
-
-    //TODO: Refresh adapters when fragment loads
 }

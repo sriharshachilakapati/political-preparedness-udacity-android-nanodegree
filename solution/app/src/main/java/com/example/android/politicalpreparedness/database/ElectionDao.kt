@@ -35,6 +35,9 @@ interface ElectionDao {
 
     suspend fun saveElection(election: Election) = saveElection(SavedElection(election.id))
 
+    @Query("SELECT * FROM elections WHERE id = :id AND id IN saved_elections")
+    suspend fun getSavedElection(id: Int): Election?
+
     @Query("DELETE FROM saved_elections where electionId = :id")
     suspend fun deleteSavedElection(id: Int)
 

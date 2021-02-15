@@ -16,6 +16,8 @@ class ElectionRepository(private val dao: ElectionDao) {
     suspend fun followElection(election: Election) = dao.saveElection(election)
     suspend fun unFollowElection(election: Election) = dao.deleteSavedElection(election)
 
+    suspend fun isElectionSaved(election: Election) = dao.getSavedElection(election.id) == election
+
     suspend fun refreshData() = withContext(Dispatchers.IO) {
         listOf(
                 async {
