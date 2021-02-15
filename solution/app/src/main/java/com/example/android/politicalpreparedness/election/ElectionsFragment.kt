@@ -15,9 +15,9 @@ import com.example.android.politicalpreparedness.election.adapter.ElectionListAd
 import com.example.android.politicalpreparedness.network.models.Election
 
 class ElectionsFragment : Fragment() {
-    private val viewModel by viewModels<ElectionsViewModel>(factoryProducer = {
-        ElectionsViewModelFactory(requireContext())
-    })
+    private val viewModel by viewModels<ElectionsViewModel> {
+        electionsViewModelFactory(requireContext())
+    }
 
     private lateinit var binding: FragmentElectionBinding
 

@@ -14,9 +14,9 @@ class VoterInfoFragment : Fragment() {
     private lateinit var binding: FragmentVoterInfoBinding
 
     private val args by navArgs<VoterInfoFragmentArgs>()
-    private val viewModel by viewModels<VoterInfoViewModel>(factoryProducer = {
-        VoterInfoViewModelFactory(requireContext(), args.election)
-    })
+    private val viewModel by viewModels<VoterInfoViewModel> {
+        voterInfoViewModelFactory(requireContext(), args.election)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
