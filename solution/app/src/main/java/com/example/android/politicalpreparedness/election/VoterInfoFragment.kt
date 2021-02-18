@@ -1,5 +1,7 @@
 package com.example.android.politicalpreparedness.election
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,25 +26,26 @@ class VoterInfoFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentVoterInfoBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.election = args.election
-        binding.viewModel = viewModel
+        binding = FragmentVoterInfoBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@VoterInfoFragment
+            election = args.election
+            viewModel = this@VoterInfoFragment.viewModel
+        }
 
-        //TODO: Populate voter info -- hide views without provided data.
-        /**
-        Hint: You will need to ensure proper data is provided from previous fragment.
-         */
+        viewModel.votingLocationFinderURL.observe(viewLifecycleOwner) { url ->
+            binding.linkVotingLocations.setOnClickListener { openURL(url) }
+        }
 
-
-        //TODO: Handle loading of URLs
-
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
+        viewModel.ballotInformationURL.observe(viewLifecycleOwner) { url ->
+            binding.linkBallotInformation.setOnClickListener { openURL(url) }
+        }
 
         return binding.root
     }
 
-    //TODO: Create method to load URL intents
-
+    private fun openURL(url: String?) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url ?: return)
+        startActivity(intent)
+    }
 }

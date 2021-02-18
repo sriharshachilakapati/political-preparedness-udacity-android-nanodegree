@@ -22,7 +22,6 @@
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add visual styling -->
         <TextView
             android:id="@+id/election_date"
             android:layout_width="match_parent"
@@ -36,58 +35,51 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="12 November 2055" />
 
-        <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/state_header"
             style="@style/SectionLabel"
             android:layout_width="wrap_content"
-            android:layout_margin="@dimen/default_padding"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_padding"
             android:text="@string/election_information"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/election_date" />
-
-        <!-- TODO: Add click binding to open web URL -->
-
-        <!-- TODO: Add visual styling and content -->
+            app:layout_constraintTop_toBottomOf="@id/election_date"
+            app:visibleIf="@{viewModel.hasElectionInformation}" />
 
         <TextView
-            android:id="@+id/state_locations"
+            android:id="@+id/link_voting_locations"
             style="@style/LinkLabel"
-            android:layout_marginTop="@dimen/default_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:clickable="true"
             android:text="@string/voting_locations"
             app:layout_constraintStart_toStartOf="@id/state_header"
-            app:layout_constraintTop_toBottomOf="@id/state_header" />
-
-        <!-- TODO: Add click binding to open web URL -->
+            app:layout_constraintTop_toBottomOf="@id/state_header"
+            app:visibleIf="@{viewModel.hasElectionInformation}" />
 
         <TextView
-            android:id="@+id/state_ballot"
+            android:id="@+id/link_ballot_information"
             style="@style/LinkLabel"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
             android:text="@string/ballot_information"
             app:layout_constraintStart_toStartOf="@id/state_header"
-            app:layout_constraintTop_toBottomOf="@id/state_locations" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/address_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="state_correspondence_header,address" />
+            app:layout_constraintTop_toBottomOf="@id/link_voting_locations"
+            app:visibleIf="@{viewModel.hasElectionInformation}" />
 
         <TextView
-            style="@style/SectionLabel"
             android:id="@+id/state_correspondence_header"
+            style="@style/SectionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/mailing_address"
             app:layout_constraintStart_toStartOf="@id/state_header"
-            app:layout_constraintTop_toBottomOf="@id/state_ballot" />
+            app:layout_constraintTop_toBottomOf="@id/link_ballot_information"
+            app:visibleIf="@{viewModel.hasMailingAddress}" />
 
         <TextView
             android:id="@+id/address"
@@ -95,18 +87,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             android:lineSpacingExtra="5dp"
-            android:text="@string/dummy_election_address"
+            android:text="@{viewModel.mailingAddress}"
             app:layout_constraintStart_toStartOf="@id/state_header"
-            app:layout_constraintTop_toBottomOf="@id/state_correspondence_header" />
+            app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
+            app:visibleIf="@{viewModel.hasMailingAddress}"
+            tools:text="@string/dummy_election_address" />
 
         <Button
+            android:id="@+id/toggle_follow_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding"
             android:onClick="@{() -> viewModel.toggleFollowElection()}"
             android:text="@{viewModel.buttonText}"
-            tools:text="@string/follow_election"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/follow_election" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
