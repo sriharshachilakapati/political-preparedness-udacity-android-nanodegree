@@ -24,7 +24,7 @@ interface ElectionDao {
     @Query("""
         DELETE FROM saved_elections
         WHERE electionId IN (
-            SELECT id FROM elections
+            SELECT id AS electionId FROM elections
             WHERE Date(electionDay) < Date(:date)
         )
     """)
