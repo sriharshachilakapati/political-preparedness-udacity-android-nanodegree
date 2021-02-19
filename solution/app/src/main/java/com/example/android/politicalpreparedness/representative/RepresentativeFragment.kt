@@ -9,15 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.util.LocationUtils
+import com.example.android.politicalpreparedness.util.PermissionManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 
-class RepresentativeFragment : Fragment() {
+class RepresentativeFragment : PermissionManager() {
     private val viewModel by viewModels<RepresentativeViewModel>()
 
     private lateinit var binding: FragmentRepresentativeBinding
@@ -56,7 +58,28 @@ class RepresentativeFragment : Fragment() {
     }
 
     private fun findWithLocation() {
-        // TODO:
+        if (!LocationUtils.hasLocationPermissions()) {
+            LocationUtils.requestPermissions {
+                when {
+                    it.areAllGranted -> findWithLocation()
+                    it.shouldShowRequestRationale -> showLocationRequestRationale()
+                    else -> binding.useLocationButton.isEnabled = false
+                }
+            }
+            return
+        }
+
+        LocationUtils.requestSingleUpdate {
+            val address = geoCodeLocation(it)
+            viewModel.fetchRepresentatives(address)
+        }
+    }
+
+    private fun showLocationRequestRationale() {
+        MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.location_required)
+                .setMessage(R.string.location_required_desc)
+                .show()
     }
 
     private fun populateStatesInformation() {
@@ -72,20 +95,6 @@ class RepresentativeFragment : Fragment() {
             addressState.setText(it.state)
             addressZip.setText(it.zip)
         }
-    }
-
-    private fun checkLocationPermissions(): Boolean {
-        return isPermissionGranted()
-    }
-
-    private fun isPermissionGranted(): Boolean {
-        //TODO: Check if permission is already granted and return (true = granted, false = denied/other)
-        return false
-    }
-
-    private fun getLocation() {
-        //TODO: Get location from LocationServices
-        //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
     }
 
     private fun geoCodeLocation(location: Location): Address {
