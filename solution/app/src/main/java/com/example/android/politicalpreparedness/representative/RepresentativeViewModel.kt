@@ -1,26 +1,36 @@
 package com.example.android.politicalpreparedness.representative
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.android.politicalpreparedness.network.CivicsApi
+import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.network.models.representatives
+import com.example.android.politicalpreparedness.representative.model.Representative
+import com.example.android.politicalpreparedness.util.TransformationsUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RepresentativeViewModel : ViewModel() {
+    private val _address = MutableLiveData<Address>()
+    private val _representatives = MutableLiveData<List<Representative>>()
 
-    //TODO: Establish live data for representatives and address
+    val address: LiveData<Address> = _address
+    val representatives: LiveData<List<Representative>> = _representatives
 
-    //TODO: Create function to fetch representatives from API from a provided address
+    val hasRepresentativesData = TransformationsUtils.map(representatives, false) { it != null }
 
-    /**
-     *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
+    fun fetchRepresentatives(address: Address) = viewModelScope.launch(Dispatchers.IO) {
+        _address.postValue(address)
 
-    val (offices, officials) = getRepresentativesDeferred.await()
-    _representatives.value = offices.flatMap { office -> office.getRepresentatives(officials) }
+        try {
+            val response = CivicsApi.retrofitService.getRepresentatives(address.toFormattedString())
 
-    Note: getRepresentatives in the above code represents the method used to fetch data from the API
-    Note: _representatives in the above code represents the established mutable live data housing representatives
+            if (!response.isSuccessful) {
+                return@launch
+            }
 
-     */
-
-    //TODO: Create function get address from geo location
-
-    //TODO: Create function to get address from individual fields
-
+            _representatives.postValue(response.body()!!.representatives)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

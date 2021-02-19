@@ -23,23 +23,55 @@ class RepresentativeFragment : Fragment() {
     private lateinit var binding: FragmentRepresentativeBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentRepresentativeBinding.inflate(inflater, container, false)
+        binding = FragmentRepresentativeBinding.inflate(inflater, container, false).apply {
+            viewModel = this@RepresentativeFragment.viewModel
+            lifecycleOwner = this@RepresentativeFragment
+        }
+
         populateStatesInformation()
+        populateAddressInformation()
 
-        binding.recyclerViewRepresentatives.adapter = RepresentativeListAdapter()
+        binding.recyclerViewRepresentatives.adapter = RepresentativeListAdapter().apply {
+            viewModel.representatives.observe(viewLifecycleOwner) { submitList(it) }
+        }
 
-        //TODO: Define and assign Representative adapter
-
-        //TODO: Populate Representative adapter
-
-        //TODO: Establish button listeners for field and location search
+        binding.findRepresentativesButton.setOnClickListener { findMyRepresentatives() }
+        binding.useLocationButton.setOnClickListener { findWithLocation() }
 
         return binding.root
+    }
+
+    private fun findMyRepresentatives() {
+        val address = with(binding) {
+            Address(
+                    addressLine1.text.toString(),
+                    addressLine2.text.toString(),
+                    addressCity.text.toString(),
+                    addressState.text.toString(),
+                    addressZip.text.toString()
+            )
+        }
+
+        viewModel.fetchRepresentatives(address)
+    }
+
+    private fun findWithLocation() {
+        // TODO:
     }
 
     private fun populateStatesInformation() {
         val statesArray = requireContext().resources.getStringArray(R.array.states)
         binding.addressState.setAdapter(ArrayAdapter(requireContext(), R.layout.layout_state_list_item, statesArray))
+    }
+
+    private fun populateAddressInformation() = viewModel.address.observe(viewLifecycleOwner) {
+        with(binding) {
+            addressLine1.setText(it.line1)
+            addressLine2.setText(it.line2)
+            addressCity.setText(it.city)
+            addressState.setText(it.state)
+            addressZip.setText(it.zip)
+        }
     }
 
     private fun checkLocationPermissions(): Boolean {

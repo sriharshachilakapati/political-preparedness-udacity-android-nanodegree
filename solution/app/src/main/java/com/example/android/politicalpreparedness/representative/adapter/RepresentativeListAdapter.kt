@@ -28,30 +28,28 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeView
     }
 }
 
-class RepresentativeViewHolder(binding: LayoutRepresentativeItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
+class RepresentativeViewHolder(private val binding: LayoutRepresentativeItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Representative) {
-//        binding.representative = item
-//        binding.representativePhoto.setImageResource(R.drawable.ic_profile)
-
-        //TODO: Show social links ** Hint: Use provided helper methods
-        //TODO: Show www link ** Hint: Use provided helper methods
-
-//        binding.executePendingBindings()
+        binding.representative = item
+        binding.executePendingBindings()
+        showSocialLinks(item.official.channels)
+        showWWWLinks(item.official.urls)
     }
 
-    //TODO: Add companion object to inflate ViewHolder (from)
+    private fun showSocialLinks(channels: List<Channel>?) {
+        val facebookUrl = getFacebookUrl(channels ?: return)
+        if (!facebookUrl.isNullOrBlank()) {
+            enableLink(binding.facebookImage, facebookUrl)
+        }
 
-    private fun showSocialLinks(channels: List<Channel>) {
-//        val facebookUrl = getFacebookUrl(channels)
-//        if (!facebookUrl.isNullOrBlank()) { enableLink(binding.facebookIcon, facebookUrl) }
-//
-//        val twitterUrl = getTwitterUrl(channels)
-//        if (!twitterUrl.isNullOrBlank()) { enableLink(binding.twitterIcon, twitterUrl) }
+        val twitterUrl = getTwitterUrl(channels)
+        if (!twitterUrl.isNullOrBlank()) {
+            enableLink(binding.twitterImage, twitterUrl)
+        }
     }
 
-    private fun showWWWLinks(urls: List<String>) {
-//        enableLink(binding.wwwIcon, urls.first())
+    private fun showWWWLinks(urls: List<String>?) {
+        enableLink(binding.webImage, (urls ?: return).first())
     }
 
     private fun getFacebookUrl(channels: List<Channel>): String? {
@@ -68,27 +66,21 @@ class RepresentativeViewHolder(binding: LayoutRepresentativeItemBinding) : Recyc
 
     private fun enableLink(view: ImageView, url: String) {
         view.visibility = View.VISIBLE
-        view.setOnClickListener { setIntent(url) }
+        view.setOnClickListener { openURL(url) }
     }
 
-    private fun setIntent(url: String) {
+    private fun openURL(url: String) {
         val uri = Uri.parse(url)
         val intent = Intent(ACTION_VIEW, uri)
         itemView.context.startActivity(intent)
     }
-
 }
 
-//TODO: Create RepresentativeDiffCallback
 class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
-    override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun areItemsTheSame(oldItem: Representative, newItem: Representative) =
+            oldItem.office.name == newItem.office.name
+                    && oldItem.official.name == newItem.official.name
 
-    override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        TODO("Not yet implemented")
-    }
-
+    override fun areContentsTheSame(oldItem: Representative, newItem: Representative) =
+            oldItem == newItem
 }
-
-//TODO: Create RepresentativeListener
