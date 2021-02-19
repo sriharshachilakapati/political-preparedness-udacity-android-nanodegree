@@ -44,6 +44,8 @@ class RepresentativeFragment : PermissionManager() {
     }
 
     private fun findMyRepresentatives() {
+        hideKeyboard()
+
         val address = with(binding) {
             Address(
                     addressLine1.text.toString(),
@@ -58,6 +60,8 @@ class RepresentativeFragment : PermissionManager() {
     }
 
     private fun findWithLocation() {
+        hideKeyboard()
+
         if (!LocationUtils.hasLocationPermissions()) {
             LocationUtils.requestPermissions {
                 when {
@@ -85,6 +89,14 @@ class RepresentativeFragment : PermissionManager() {
     private fun populateStatesInformation() {
         val statesArray = requireContext().resources.getStringArray(R.array.states)
         binding.addressState.setAdapter(ArrayAdapter(requireContext(), R.layout.layout_state_list_item, statesArray))
+
+        viewModel.address.observe(viewLifecycleOwner) {
+            var index = statesArray.indexOf(it.state)
+            if (index == -1) {
+                index = 0
+            }
+            binding.addressState.setSelection(index)
+        }
     }
 
     private fun populateAddressInformation() = viewModel.address.observe(viewLifecycleOwner) {
@@ -92,7 +104,6 @@ class RepresentativeFragment : PermissionManager() {
             addressLine1.setText(it.line1)
             addressLine2.setText(it.line2)
             addressCity.setText(it.city)
-            addressState.setText(it.state)
             addressZip.setText(it.zip)
         }
     }
