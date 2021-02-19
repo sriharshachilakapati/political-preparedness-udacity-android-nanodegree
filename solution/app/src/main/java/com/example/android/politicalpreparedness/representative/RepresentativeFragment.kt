@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import java.util.*
@@ -21,6 +23,7 @@ class RepresentativeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRepresentativeBinding.inflate(inflater, container, false)
+        populateStatesInformation()
 
         //TODO: Define and assign Representative adapter
 
@@ -29,6 +32,11 @@ class RepresentativeFragment : Fragment() {
         //TODO: Establish button listeners for field and location search
 
         return binding.root
+    }
+
+    private fun populateStatesInformation() {
+        val statesArray = requireContext().resources.getStringArray(R.array.states)
+        binding.addressState.setAdapter(ArrayAdapter(requireContext(), R.layout.layout_state_list_item, statesArray))
     }
 
     private fun checkLocationPermissions(): Boolean {
