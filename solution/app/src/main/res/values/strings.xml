@@ -14,4 +14,9 @@
     <string name="dummy_election_address">148 West River Street\nProvidence, Rhode Island 2904</string>
     <string name="follow_election">Follow Election</string>
     <string name="unfollow_election">Unfollow Election</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="address_city">City</string>
+    <string name="address_state">State</string>
+    <string name="use_my_location">Use my Location</string>
 </resources>

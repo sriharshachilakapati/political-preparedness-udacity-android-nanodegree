@@ -9,22 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import java.util.*
 
-class DetailFragment : Fragment() {
+class RepresentativeFragment : Fragment() {
+    private val viewModel by viewModels<RepresentativeViewModel>()
 
-    companion object {
-        //TODO: Add Constant for Location request
-    }
+    private lateinit var binding: FragmentRepresentativeBinding
 
-    //TODO: Declare ViewModel
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        //TODO: Establish bindings
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentRepresentativeBinding.inflate(inflater, container, false)
 
         //TODO: Define and assign Representative adapter
 
@@ -32,7 +28,7 @@ class DetailFragment : Fragment() {
 
         //TODO: Establish button listeners for field and location search
 
-        return null
+        return binding.root
     }
 
     private fun checkLocationPermissions(): Boolean {
@@ -60,7 +56,6 @@ class DetailFragment : Fragment() {
 
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
-
 }
