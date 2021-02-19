@@ -23,4 +23,5 @@
     <string name="twitter_url">Twitter URL</string>
     <string name="facebook_url">Facebook URL</string>
     <string name="web_url">Web URL</string>
+    <string name="address_zip">Zip Code</string>
 </resources>

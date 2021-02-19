@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import java.util.*
 
 class RepresentativeFragment : Fragment() {
@@ -24,6 +25,8 @@ class RepresentativeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRepresentativeBinding.inflate(inflater, container, false)
         populateStatesInformation()
+
+        binding.recyclerViewRepresentatives.adapter = RepresentativeListAdapter()
 
         //TODO: Define and assign Representative adapter
 

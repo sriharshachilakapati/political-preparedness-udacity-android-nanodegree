@@ -54,13 +54,21 @@
         app:constraintSetEnd="@id/form_out_of_view"
         app:constraintSetStart="@+id/form_in_view">
 
-        <OnSwipe app:dragDirection="dragUp" />
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:moveWhenScrollAtTop="true"
+            app:onTouchUp="stop"
+            app:touchAnchorId="@id/recyclerView_representatives" />
     </Transition>
 
     <Transition
         app:constraintSetEnd="@id/form_in_view"
         app:constraintSetStart="@+id/form_out_of_view">
 
-        <OnSwipe app:dragDirection="dragDown" />
+        <OnSwipe
+            app:dragDirection="dragDown"
+            app:moveWhenScrollAtTop="true"
+            app:onTouchUp="stop"
+            app:touchAnchorId="@id/recyclerView_representatives" />
     </Transition>
 </MotionScene>
