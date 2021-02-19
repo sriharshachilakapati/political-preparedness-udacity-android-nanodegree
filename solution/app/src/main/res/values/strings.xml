@@ -19,4 +19,8 @@
     <string name="address_city">City</string>
     <string name="address_state">State</string>
     <string name="use_my_location">Use my Location</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="twitter_url">Twitter URL</string>
+    <string name="facebook_url">Facebook URL</string>
+    <string name="web_url">Web URL</string>
 </resources>

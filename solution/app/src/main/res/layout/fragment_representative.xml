@@ -115,26 +115,25 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/representative_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+        <View
+            android:id="@+id/section_divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="128dp"
+            android:layout_marginVertical="32dp"
+            android:background="@color/cardview_shadow_start_color"
             app:layout_constraintTop_toBottomOf="@id/address_form" />
 
-        <!-- TODO: Add Representatives RecyclerView -->
-
-        <!-- TODO: Add visual styling and content -->
-        <TextView
-            android:id="@+id/list_placeholder"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_representatives"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:visibility="gone"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/representative_title"
-            tools:visibilityMode="ignore" />
+            app:layout_constraintTop_toBottomOf="@id/section_divider"
+            tools:itemCount="10"
+            tools:listitem="@layout/layout_representative_item" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
