@@ -2,15 +2,41 @@
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ConstraintSet android:id="@+id/start">
-        <Constraint android:id="@+id/search_title" />
+    <ConstraintSet android:id="@+id/form_in_view">
+        <Constraint
+            android:id="@+id/address_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/end">
-        <Constraint android:id="@id/search_title" />
+    <ConstraintSet android:id="@+id/form_out_of_view">
+        <Constraint
+            android:id="@+id/address_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="parent" />
     </ConstraintSet>
 
     <Transition
-        app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@+id/start" />
+        app:constraintSetEnd="@id/form_out_of_view"
+        app:constraintSetStart="@+id/form_in_view">
+
+        <OnSwipe app:dragDirection="dragUp" />
+    </Transition>
+
+    <Transition
+        app:constraintSetEnd="@id/form_in_view"
+        app:constraintSetStart="@+id/form_out_of_view">
+
+        <OnSwipe app:dragDirection="dragDown" />
+    </Transition>
 </MotionScene>
